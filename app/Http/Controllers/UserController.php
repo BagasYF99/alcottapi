@@ -13,6 +13,8 @@ use Spatie\Fractal\Fractal;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class UserController extends Controller
 {
@@ -23,10 +25,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // $response = Http::get('http://127.0.0.1:8000/api/all/user?');
+        // $client = new Client();
+        // $res = $client->request('GET', 'http://127.0.0.1:8000/api/all/user?');
+        // dd($res);
         $users = User::userFilter()->where('id', '>', 0)->paginate(10)->withQueryString();
         if(count($users)<1){
             $users = [];
         }
+        // dd($users);
         return view('user', compact('users'));
     }
 

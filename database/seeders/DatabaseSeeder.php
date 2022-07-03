@@ -28,21 +28,21 @@ class DatabaseSeeder extends Seeder
         $newDataCountry->save();
 
         $newDataProvince = new Province;
-        $newDataProvince->name =  'Jawa';
+        $newDataProvince->name =  'Jawa Tengah';
         $newDataProvince->country_id = 1;
         $newDataProvince->man_population =  5000000;
         $newDataProvince->woman_population =  4200000;
         $newDataProvince->save();
 
         $newDataProvince = new Province;
-        $newDataProvince->name =  'Kalimantan';
+        $newDataProvince->name =  'Kalimantan Tengah';
         $newDataProvince->country_id = 1;
         $newDataProvince->man_population =  6000000;
         $newDataProvince->woman_population =  5500000;
         $newDataProvince->save();
 
         $newDataProvince = new Province;
-        $newDataProvince->name =  'Sumatra';
+        $newDataProvince->name =  'Sumatra Utara';
         $newDataProvince->country_id = 1;
         $newDataProvince->man_population =  4000000;
         $newDataProvince->woman_population =  3700000;

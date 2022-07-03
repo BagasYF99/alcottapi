@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class LoginController extends Controller
 {
@@ -22,7 +24,7 @@ class LoginController extends Controller
         // dd($request->all());
         $credentials = request()->validate([
             'username' => ['required', 'min:6', 'max:255'],
-            'password' => ['required'],
+            'password' => ['required', 'min:6'],
         ]);
         // dd(Auth::attempt($credentials));
         if (Auth::attempt($credentials)) {
@@ -43,6 +45,28 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
+    public function loginApiPostman(Request $request)
+    {
+        $credentials = request()->validate([
+            'username' => ['required', 'min:6', 'max:255'],
+            'password' => ['required', 'min:6'],
+        ]);
+
+        if (!Auth::attempt($credentials)) {
+            return response()->json(['message' => 'Your credential is wrong'],401);
+        }
+        $user = Auth::user();
+        $token = $user->createToken('token')->plainTextToken;
+        return response()->json([
+            "message" => "Success",
+            "data" => $user,
+            "meta" => [
+                "access_token" => $token,
+                "token_type" => "Bearer"
+            ]
+        ]);
+    }
+    
     public function loginApi(Request $request)
     {
         $credentials = request()->validate([
@@ -53,10 +77,6 @@ class LoginController extends Controller
         if (!Auth::attempt($credentials)) {
             return response()->json(['message' => 'Your credential is wrong'],401);
         }
-        // if(!$token = auth()->attepmt($credentials)){
-        //         return response()->json(['message' => 'Your credential is wrong'],401);
-        // }
-        // return response()->json(compact('token'));
         $user = Auth::user();
         $token = $user->createToken('token')->plainTextToken;
         return response()->json([

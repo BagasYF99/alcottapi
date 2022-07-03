@@ -103,8 +103,9 @@
             
             <nav class="navbar navbar-light bg-light justify-content-between mt-4">
             <a class="navbar-brand">Provinsi</a>
-            <form class="form-inline" action="/dashboard">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search Provinsi" id="search-film" name="search" aria-label="Search" value="{{request('search')}}">
+            <form class="form-inline" >
+            <!-- action="/dashboard" -->
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Provinsi" id="search-province" name="search" aria-label="Search" value="{{request('search')}}">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
             </nav>
@@ -191,5 +192,22 @@
 </script> -->
 
 <!-- get fata from Open API -->
+<script>
+    $('#search-province').on('click', function(){
+        $.ajax({
+            url: "http://127.0.0.1:8000/api/all/province",
+            type: "get",
+            dataType: "json",
+            data: {
+                // 'apikey': "dca61bcc",
+                'name': $('#search-province').val()
+
+            },
+            success: function(result){
+                console.log(result)
+            }
+        });
+    });
+</script>
 </body>
 </html>
